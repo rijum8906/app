@@ -1,4 +1,4 @@
-export const toLoginInfo = (raw) => {
+const formatLoginData = (raw) => {
   const password = raw.password;
   const remember = raw.remember;
   if (raw.usernameOrEmail.indexOf("@") !== -1) {
@@ -14,3 +14,6 @@ export const toLoginInfo = (raw) => {
     };
   }
 };
+
+
+export const { formatLoginData };

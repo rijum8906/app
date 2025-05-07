@@ -1,49 +1,48 @@
 // src/features/auth/authSlice.js
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { toLoginInfo } from "./../../utils/authUtils";
 
-// Check local storage for initial state
 const initialState = {
-  user: JSON.parse(localStorage.getItem("user")) || null,
+  user: null,
   loading: false,
-  error: false,
+  error: null,
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: "user",
   initialState,
   reducers: {
-    loadingStart: (state) => {
+    loginStart: (state) => {
       state.loading = true;
+      state.error = null;
     },
-    login: async (state, action) => {
-      const values = action.payload;
-      // Make API call using Axios
-      try {
-        const response = await axios.post(
-          "https://your-api-endpoint.com/login",
-          toLoginInfo({
-            usernameOrEmail: values.usernameOrEmail,
-            password: values.password,
-            remember: values.remember,
-          }),
-        );
-        state.data = response.data;
-      } catch (error) {
-        state.error = error;
-      }
+    loginSuccess: (state, action) => {
       state.loading = false;
-      localStorage.setItem("user", JSON.stringify(data)); // Save user to local storage
+      state.user = action.payload;
     },
-    logout: async (state) => {
+    loginFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    registrationStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    registrationSuccess: (state, action) => {
+      state.loading = false;
+      state.user = action.payload;
+    },
+    rregistrationFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    logout: (state) => {
       state.user = null;
       state.loading = false;
-      localStorage.removeItem("user"); // Remove user from local storage
+      state.error = null;
     },
   },
 });
 
-export const { login, logout, loadingStart } = authSlice.actions;
+export const { loginStart, loginSuccess, loginFailure, registrationStart, registrationSuccess, registrationFailure, logout } = authSlice.actions;
 
 export default authSlice.reducer;
