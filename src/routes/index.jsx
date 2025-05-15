@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ErrorBoundary from "./ErrorBoundary";
 import { Loader } from "../components/UI";
 import { MainLayout, AdminLayout } from "../components/layout";
 import { PrivateRoutes, AdminRoutes } from "./PrivateRoutes";
@@ -13,9 +14,11 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: (
-      <Suspense fallback={<Loader fullScreen />}>
-        <Login />
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<Loader fullScreen />}>
+          <Login />
+        </Suspense>
+      </ErrorBoundary>
     ),
   },
   {

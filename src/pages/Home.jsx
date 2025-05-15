@@ -1,5 +1,12 @@
+import { MainNavbar } from "./../components/layout";
+
 const Home = () => {
-  return <>My Home</>;
+  return (
+  <>
+    <MainNavbar />
+    home
+  </>
+  )
 };
 
 export default Home;

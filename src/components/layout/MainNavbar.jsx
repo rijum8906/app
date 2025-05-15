@@ -11,12 +11,19 @@ const MainNavbar = () => {
 
   // Filter links based on authentication status
   const filteredLinks = navbarLinks.filter((link) => {
-    if (link.registeredOnly && !user) return false;
-    if (link.unRegisterdOnly && user) return false;
-    return true;
+    if(link.registeredOnly && user){
+      return true;
+    }
+    if(link.unRegisteredOnly && !user){
+      return true;
+    } 
+    if(!link.registeredOnly && !link.unRegisteredOnly){
+      return true;
+    }
   });
 
   // Unregistered user
+  console.log(user.profileInfo.avatarURL)
 
   // Registered Users
   const logoutHandler = () => {
@@ -31,9 +38,10 @@ const MainNavbar = () => {
       </NavbarBrand>
       <div className="flex md:order-2">
         {user ? (
-          <Dropdown arrowIcon={false} inline label={<Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded />}>
+          <Dropdown arrowIcon={false} inline label={<Avatar alt="User settings" img={user ? user.profileInfo.avatarURL.substr(0,user.profileInfo.avatarURL.length - 6 ) : 'https://flowbite.com/docs/images/people/profile-picture-5.jpg'
+          } rounded />}>
             <DropdownHeader>
-              <span className="block text-sm">{user.name || "User"}</span>
+              <span className="block text-sm">{user.profileInfo.firstName+" "+user.profileInfo.lastName || "User"}</span>
               <span className="block truncate text-sm font-medium">{user.email || "user@example.com"}</span>
             </DropdownHeader>
             <DropdownItem as={Link} to="/dashboard">

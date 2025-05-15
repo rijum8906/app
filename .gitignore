@@ -1,0 +1,7 @@
+*.env
+.env
+.prettierrc
+tailwind.config.js
+
+node_modules/
+public/
