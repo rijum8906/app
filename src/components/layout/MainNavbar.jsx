@@ -38,7 +38,7 @@ const MainNavbar = () => {
       </NavbarBrand>
       <div className="flex md:order-2">
         {user ? (
-          <Dropdown arrowIcon={false} inline label={<Avatar alt="User settings" img={user ? user.profileInfo.avatarURL.substr(0,user.profileInfo.avatarURL.length - 6 ) : 'https://flowbite.com/docs/images/people/profile-picture-5.jpg'
+          <Dropdown arrowIcon={false} inline label={<Avatar alt="User settings" img={user ? user.profileInfo.avatarURL : 'https://flowbite.com/docs/images/people/profile-picture-5.jpg'
           } rounded />}>
             <DropdownHeader>
               <span className="block text-sm">{user.profileInfo.firstName+" "+user.profileInfo.lastName || "User"}</span>
