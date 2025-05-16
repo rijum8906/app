@@ -15,9 +15,13 @@ const GoogleLoginButton = () => {
         token: credentialResponse.credential,
       });
 
+      console.log(res)
+      const token = res.data.data.token;
+      const user = JOSN.parse(atob(token.slpit(".")[1]));
+
       dispatch(loginSuccess({
-        token: res.data.data.token,
-        ...res.data.data.user
+        token,
+        user
       }));
       toast.success("Logged in with Google!");
     } catch (err) {

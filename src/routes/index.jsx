@@ -1,69 +1,32 @@
+// AppRoutes.jsx
 import { Suspense } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Routes, Route, BrowserRouter,Outlet } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
 import { Loader } from "../components/UI";
-import { MainLayout, AdminLayout } from "../components/layout";
+import { MainLayout, AdminLayout } from "./../components/layout/AppLayout";
 import { PrivateRoutes, AdminRoutes } from "./PrivateRoutes";
+import { Home, Login, Register, Error404, UserAccount } from "../pages";
 
-// Lazy-loaded pages
-import { Home, Login, Register, Error404 } from "./../pages";
-
-// Using createBrowserRouter (recommended approach in v6.4+)
-const router = createBrowserRouter([
-  // Main routes
-  {
-    path: "/login",
-    element: (
-      <ErrorBoundary>
-        <Suspense fallback={<Loader fullScreen />}>
-          <Login />
-        </Suspense>
-      </ErrorBoundary>
-    ),
-  },
-  {
-    path: "/register",
-    element: (
-      <Suspense fallback={<Loader fullScreen />}>
-        <Register />
+function AppRoutes() {
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<Loader />}>
+        <ErrorBoundary>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            
+            <Route element={<MainLayout />} >
+              <Route index element={<Home />} />
+              <Route path="/my-account" element={<UserAccount />} >
+                
+              </Route>
+            </Route>
+          </Routes>
+        </ErrorBoundary>
       </Suspense>
-    ),
-  },
-  {
-    path: "/",
-    element: (
-      <Suspense fallback={<Loader fullScreen />}>
-        <PrivateRoutes>
-          <MainLayout />
-        </PrivateRoutes>
-      </Suspense>
-    ),
-    children: [
-      {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: "*",
-        element: <Error404 />,
-      },
-    ],
-  },
-
-  // Admin routes
-  {
-    path: "/admin",
-    element: (
-      <Suspense fallback={<Loader fullScreen />}>
-        <AdminRoutes>
-          <AdminLayout />
-        </AdminRoutes>
-      </Suspense>
-    ),
-    children: [],
-  },
-]);
-
-export default function AppRoutes() {
-  return <RouterProvider router={router} />;
+    </BrowserRouter>
+  );
 }
+
+export default AppRoutes;

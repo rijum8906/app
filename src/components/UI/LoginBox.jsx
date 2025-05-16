@@ -21,11 +21,10 @@ const LoginBox = () => {
       dispatch(loginStart());
 
       const res = await axios.post(url, payload);
-
-      dispatch(loginSuccess({
-        token: res.data.data.token,
-        ...res.data.data.user
-      }));
+      const token = res.data.data.token;
+      const user = JSON.parse(atob(token.split(".")[1]));
+      
+      dispatch(loginSuccess(token));
       toast.success("Logged in successfully!");
       navigate("/");
     } catch (err) {

@@ -3,11 +3,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { navbarLinks } from "./../../config/routes";
 import { useLocation, Link } from "react-router-dom";
 import { logout } from "./../../features/auth/authSlice";
+import { toast } from "react-toastify";
+import axios from "./../../api/axios"
 
 const MainNavbar = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
   const location = useLocation();
+  
+  const user = token ? JSON.parse(atob(token.split(".")[1])) : null;
 
   // Filter links based on authentication status
   const filteredLinks = navbarLinks.filter((link) => {
@@ -23,11 +27,16 @@ const MainNavbar = () => {
   });
 
   // Unregistered user
-  console.log(user.profileInfo.avatarURL)
 
   // Registered Users
-  const logoutHandler = () => {
-    dispatch(logout());
+  const logoutHandler = async () => {
+    const res = await axios.post("/auth/logout");
+    if(res.data?.status){
+      dispatch(logout());
+      toast.success("Logged out successfully.");
+    } else {
+      toast.error(res.error?.data?.message || "Couldn't logged out.");
+    }
   };
 
   return (
@@ -38,16 +47,16 @@ const MainNavbar = () => {
       </NavbarBrand>
       <div className="flex md:order-2">
         {user ? (
-          <Dropdown arrowIcon={false} inline label={<Avatar alt="User settings" img={user ? user.profileInfo.avatarURL : 'https://flowbite.com/docs/images/people/profile-picture-5.jpg'
+          <Dropdown arrowIcon={false} inline label={<Avatar alt="User settings" img={user ? user?.avatarURL : 'https://flowbite.com/docs/images/people/profile-picture-5.jpg'
           } rounded />}>
             <DropdownHeader>
-              <span className="block text-sm">{user.profileInfo.firstName+" "+user.profileInfo.lastName || "User"}</span>
-              <span className="block truncate text-sm font-medium">{user.email || "user@example.com"}</span>
+              <span className="block text-sm">{user?.firstName+" "+user?.lastName || "User"}</span>
+              <span className="block truncate text-sm font-medium">{user?.email || "user@example.com"}</span>
             </DropdownHeader>
-            <DropdownItem as={Link} to="/dashboard">
-              Dashboard
+            <DropdownItem as={Link} to="/my-account">
+              My Account
             </DropdownItem>
-            <DropdownItem as={Link} to="/settings">
+            <DropdownItem as={Link} to="/my-account/settings">
               Settings
             </DropdownItem>
             <DropdownDivider />

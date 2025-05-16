@@ -1,12 +1,13 @@
 import { MainNavbar, MainFooter, AdminNavbar } from "./";
+import { PrivateRoutes, AdminRoutes } from "./../../routes/PrivateRoutes"
 import { Outlet } from "react-router-dom";
 
 const MainLayout = () => {
   return (
     <>
-      <MainNavbar />
-      <Outlet />
-      <MainFooter />
+        <MainNavbar />
+        <Outlet />
+        <MainFooter />
     </>
   );
 };
@@ -14,9 +15,11 @@ const MainLayout = () => {
 const AdminLayout = () => {
   return (
     <>
-      <AdminNavbar />
-      <Outlet />
-      <MainFooter />
+      <AdminRoutes>
+        <AdminNavbar />
+        <Outlet />
+        <MainFooter />
+      </AdminRoutes>
     </>
   );
 };
