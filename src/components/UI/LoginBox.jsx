@@ -1,115 +1,149 @@
-import { loginStart, loginSuccess, loginFailure } from "./../../features/auth/authSlice";
-import axios from "./../../api/axios";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { Button, Checkbox, Label, TextInput } from "flowbite-react";
-import { AiOutlineLoading } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import {
+  loginStart,
+  loginSuccess,
+  loginFailure
+} from './../../features/auth/authSlice';
+import axios from './../../api/axios';
+import { toast } from 'react-toastify';
+import { useNavigate, Link } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
-import { useSelector, useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "./../../validators/authValidator";
+import { useSelector, useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { loginSchema } from './../../validators/authValidator';
+import {
+  Box,
+  Button,
+  Checkbox,
+  CircularProgress,
+  FormControlLabel,
+  TextField,
+  Typography
+} from '@mui/material';
 
 const LoginBox = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const loading = useSelector((state) => state.auth.loading);
-  
-  const sendLoginDataToServer = async (url, payload)=>{
+  const loading = useSelector(state => state.auth.loading);
+
+  const sendLoginDataToServer = async (url, payload) => {
     try {
       dispatch(loginStart());
-
       const res = await axios.post(url, payload);
       const token = res.data.data.token;
-      const user = JSON.parse(atob(token.split(".")[1]));
-      
+      const user = JSON.parse(atob(token.split('.')[1]));
+
       dispatch(loginSuccess(token));
-      toast.success("Logged in successfully!");
-      navigate("/");
+      toast.success('Logged in successfully!');
+      navigate('/');
     } catch (err) {
       dispatch(loginFailure());
-      toast.error(err.response?.data?.message || "Login failed. Please try again.");
+      toast.error(
+        err.response?.data?.message || 'Login failed. Please try again.'
+      );
     }
-  }
+  };
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting }
   } = useForm({
-    defaultValues: {
-      emailOrUsername: "",
-      password: "",
-      remember: false,
-    },
-    resolver: zodResolver(loginSchema),
+    defaultValues: { emailOrUsername: '', password: '', remember: false },
+    resolver: zodResolver(loginSchema)
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async data => {
     const { emailOrUsername, password } = data;
 
-    const isEmail = emailOrUsername.includes("@");
+    const isEmail = emailOrUsername.includes('@');
     const payload = {
       password,
-      ...(isEmail ? { email: emailOrUsername.toLowerCase() } : { username: emailOrUsername.toLowerCase() }),
+      ...(isEmail
+        ? { email: emailOrUsername.toLowerCase() }
+        : { username: emailOrUsername.toLowerCase() })
     };
-    await sendLoginDataToServer("/auth/login",payload);
+    await sendLoginDataToServer('/auth/login', payload);
   };
 
   return (
-    <div>
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-        <h2 className="text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-500">Log In</h2>
-
-        {/* Username or Email */}
-        <div>
-          <Label htmlFor="emailOrUsername" value="Username or Email" className="text-gray-700 mb-2 block" />
-          <TextInput id="emailOrUsername" type="text" placeholder="Enter your Username or Email" addon="👤" {...register("emailOrUsername")} />
-          {errors.emailOrUsername && <p className="text-red-500 text-sm mt-1">{errors.emailOrUsername.message}</p>}
-        </div>
-
-        {/* Password */}
-        <div>
-          <Label htmlFor="password" value="Your password" className="text-gray-700 mb-2 block" />
-          <TextInput id="password" type="password" addon="🔒" {...register("password")} />
-          {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
-        </div>
-
-        {/* Remember Me */}
-        <div className="flex items-center gap-2">
-          <Checkbox id="remember" {...register("remember")} />
-          <Label htmlFor="remember" className="text-gray-700">
-            Remember me
-          </Label>
-        </div>
-
-        {/* Submit */}
-        <div className="min-w-full flex justify-center">
-          <Button gradientDuoTone="purpleToBlue" type="submit" size="xl" disabled={isSubmitting || loading}>
-            {isSubmitting || loading ? (
-              <>
-                <AiOutlineLoading className="h-5 w-5 animate-spin mr-2" />
-                Signing in...
-              </>
-            ) : (
-              "Sign In"
-            )}
-          </Button>
-        </div>
-      </form>
-      <div className="flex justify-center">
-        <GoogleLogin onSuccess={async (data)=>{
-          await sendLoginDataToServer("/auth/continue-with-google",{token:data.credential})
-        }} />
-      </div>
-      <p className="text-sm text-center text-gray-600">
-        Don't have an account?{" "}
-        <Link to="/register" className="font-semibold text-purple-600 hover:text-purple-700 hover:underline">
+    <Box
+      component="form"
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
+      sx={{
+        maxWidth: 400,
+        mx: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2
+      }}
+    >
+      {' '}
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{
+          fontWeight: 600,
+          background: 'linear-gradient(to right, #8e24aa, #3949ab)',
+          WebkitBackgroundClip: 'text',
+          color: 'transparent'
+        }}
+      >
+        {' '}
+        Log In{' '}
+      </Typography>
+      <TextField
+        fullWidth
+        label="Username or Email"
+        variant="outlined"
+        {...register('emailOrUsername')}
+        error={Boolean(errors.emailOrUsername)}
+        helperText={errors.emailOrUsername?.message}
+      />
+      <TextField
+        fullWidth
+        label="Password"
+        type="password"
+        variant="outlined"
+        {...register('password')}
+        error={Boolean(errors.password)}
+        helperText={errors.password?.message}
+      />
+      <FormControlLabel
+        control={<Checkbox {...register('remember')} />}
+        label="Remember me"
+      />
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        fullWidth
+        size="large"
+        disabled={isSubmitting || loading}
+        startIcon={(isSubmitting || loading) && <CircularProgress size={20} />}
+      >
+        {isSubmitting || loading ? 'Signing in...' : 'Sign In'}
+      </Button>
+      <Box display="flex" justifyContent="center" mt={2}>
+        <GoogleLogin
+          onSuccess={async data => {
+            await sendLoginDataToServer('/auth/continue-with-google', {
+              token: data.credential
+            });
+          }}
+        />
+      </Box>
+      <Typography variant="body2" align="center" mt={2}>
+        Don't have an account?{' '}
+        <Link
+          to="/register"
+          style={{ color: '#7b1fa2', textDecoration: 'none', fontWeight: 500 }}
+        >
           Register
         </Link>
-      </p>
-    </div>
+      </Typography>
+    </Box>
   );
 };
 

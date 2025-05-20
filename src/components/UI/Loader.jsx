@@ -1,15 +1,25 @@
-import { Spinner } from "flowbite-react";
+import React from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
 
-export default function LoaderPage() {
+const Loader = ({ message = 'Loading...' }) => {
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-50">
-      <div className="text-center">
-        {/* Spinner Component */}
-        <Spinner aria-label="Loading" size="xl" />
-
-        {/* Optional Loading Text */}
-        <p className="mt-4 text-lg font-medium text-gray-700">Loading...</p>
-      </div>
-    </div>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        textAlign: 'center',
+        gap: 2
+      }}
+    >
+      <CircularProgress size={60} thickness={5} />
+      <Typography variant="h6" color="text.secondary">
+        {message}
+      </Typography>
+    </Box>
   );
-}
+};
+
+export default Loader;

@@ -1,9 +1,11 @@
-import { UserAccountBox } from "./../components/UI";
+import { UserAccountBox } from './../components/UI';
 
-const UserAccount = () =>{
-  return <>
-    <UserAccountBox/>
-  </>
-}
+const UserAccount = () => {
+  return (
+    <>
+      <UserAccountBox />
+    </>
+  );
+};
 
 export default UserAccount;

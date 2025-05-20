@@ -12,9 +12,13 @@
     "css": "npx tailwindcss -i ./src/input.css -o ./public/css/styles.css --watch"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^5.0.1",
+    "@mui/icons-material": "^7.1.0",
+    "@mui/material": "^7.1.0",
     "@react-oauth/google": "^0.12.2",
     "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.8",
