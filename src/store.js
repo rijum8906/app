@@ -10,9 +10,9 @@ const rootReducer = combineReducers({
 });
 
 const persistConfig = {
-  key: 'auth',
+  key: 'app',
   storage,
-  whitelist: ['auth'],
+  whitelist: ['auth', 'theme'],
   version: 1
 };
 

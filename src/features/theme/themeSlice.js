@@ -1,20 +1,22 @@
-// src/features/auth/authSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  mode: 'light'
+  theme: "main",
+  mode: "light"
 };
 
-const themeSlice = createSlice({
+const themeSlice  = createSlice({
   name: 'theme',
   initialState,
   reducers: {
-    toggleTheme: state => {
-      state.mode = state.mode === 'light' ? 'dark' : 'light';
+    toggleMode: (state) => {
+      state.mode = state.mode === "dark" ? "light" : "dark"
+    },
+    changeTheme: (state, action) => {
+      state.theme = action.payload;
     }
-  }
+  },
 });
 
-export const { toggleTheme } = themeSlice.actions;
-
-export default themeSlice.reducer;
+export const { toggleMode, changeTheme } = themeSlice .actions;
+export default themeSlice .reducer;
