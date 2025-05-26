@@ -1,31 +1,24 @@
-import { Typography, Button, Box } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Typography, Button, Box } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export const A = ({ children, to, ...rest }) => {
   return (
-    <Typography
-      component={Link}
-      to={to}
-      sx={{ textDecoration: "underline" }}
-      {...rest}
-    >
-      {children}
-    </Typography>
+    <Link to={to}>
+      <Button {...rest} variant="text" sx={{ px:2 }}>
+        {children}
+      </Button>
+    </Link>
   );
 };
 
 export const CustomButton = ({ children, ...rest }) => {
   return (
-    <Button disableRipple disableFocusRipple {...rest}>
+    <Button {...rest}>
       {children}
     </Button>
   );
 };
 
-export const CustomBox = ({children,  ...rest}) => {
-  return (
-    <Box {...rest}>
-      {children}
-    </Box>
-  );
-}
+export const CustomBox = ({ children, ...rest }) => {
+  return <Box {...rest}>{children}</Box>;
+};

@@ -18,7 +18,7 @@ const NotFoundPage = () => {
       }}
     >
       <SentimentVeryDissatisfiedIcon sx={{ fontSize: 100, mb: 2, color: 'primary.main' }} />
-      
+
       <Typography variant="h3" fontWeight={700} gutterBottom>
         404 - Page Not Found
       </Typography>
@@ -27,13 +27,7 @@ const NotFoundPage = () => {
         Oops! The page you're looking for doesn't exist or has been moved.
       </Typography>
 
-      <Button
-        component={Link}
-        to="/"
-        variant="contained"
-        color="primary"
-        size="large"
-      >
+      <Button component={Link} to="/" variant="contained" color="primary" size="large">
         Go to Homepage
       </Button>
     </Box>

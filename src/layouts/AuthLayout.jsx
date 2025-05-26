@@ -1,8 +1,8 @@
-import { Outlet } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Outlet } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
 
 // Loader Component
-import Loader from "./../components/Loader";
+import Loader from './../components/Loader';
 
 const MainLayout = () => {
   return (
@@ -11,7 +11,7 @@ const MainLayout = () => {
         <Outlet />
       </Suspense>
     </>
-    )
-}
+  );
+};
 
 export default MainLayout;

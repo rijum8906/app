@@ -1,5 +1,3 @@
-
-
-const GeneralSettings = ()  => {
-  return 
-}
+const GeneralSettings = () => {
+  return;
+};

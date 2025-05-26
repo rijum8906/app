@@ -1,41 +1,33 @@
-import {
-  Box,
-  TextField,
-  Button,
-  Typography,
-  Paper,
-  InputAdornment,
-  CircularProgress
-} from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import { startLoading, loginSuccess, loginFailure } from "./../authSlice";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import EmailIcon from "@mui/icons-material/Email";
-import LockIcon from "@mui/icons-material/Lock";
+import { Box, TextField, Button, Typography, Paper, InputAdornment, CircularProgress } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { startLoading, loginSuccess, loginFailure } from './../authSlice';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import EmailIcon from '@mui/icons-material/Email';
+import LockIcon from '@mui/icons-material/Lock';
 
 // Zod schema
 const schema = z.object({
-  identifier: z.string().min(3, "Email or username is required"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  identifier: z.string().min(3, 'Email or username is required'),
+  password: z.string().min(6, 'Password must be at least 6 characters')
 });
 
 const LoginPage = () => {
-  const { loading } = useSelector((state) => state.auth);
+  const { loading } = useSelector(state => state.auth);
   const dispatch = useDispatch();
-  
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting }
   } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema)
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = data => {
     dispatch(startLoading());
-    console.log("Login submitted:", data);
+    console.log('Login submitted:', data);
     // Handle actual login logic
   };
 
@@ -45,9 +37,9 @@ const LoginPage = () => {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      sx={{ backgroundColor: (theme) => theme.palette.background.default, px: 2 }}
+      sx={{ backgroundColor: theme => theme.palette.background.default, px: 2 }}
     >
-      <Paper elevation={4} sx={{ p: 4, width: "100%", maxWidth: 400, borderRadius: 3 }}>
+      <Paper elevation={4} sx={{ p: 4, width: '100%', maxWidth: 400, borderRadius: 3 }}>
         <Typography variant="h5" fontWeight={600} mb={2} textAlign="center">
           Sign In to Your Account
         </Typography>
@@ -57,7 +49,7 @@ const LoginPage = () => {
             label="Email or Username"
             fullWidth
             margin="normal"
-            {...register("identifier")}
+            {...register('identifier')}
             error={!!errors.identifier}
             helperText={errors.identifier?.message}
             InputProps={{
@@ -65,7 +57,7 @@ const LoginPage = () => {
                 <InputAdornment position="start">
                   <EmailIcon />
                 </InputAdornment>
-              ),
+              )
             }}
           />
 
@@ -74,7 +66,7 @@ const LoginPage = () => {
             type="password"
             fullWidth
             margin="normal"
-            {...register("password")}
+            {...register('password')}
             error={!!errors.password}
             helperText={errors.password?.message}
             InputProps={{
@@ -82,28 +74,23 @@ const LoginPage = () => {
                 <InputAdornment position="start">
                   <LockIcon />
                 </InputAdornment>
-              ),
+              )
             }}
           />
-          {
-            loading ?
+          {loading ? (
             <Button
-            variant="outlined"
-            fullWidth
-            size="large"
-            startIcon={<CircularProgress size={20} thickness={4} color="primary" />}
-            >
-              Login
-            </Button> :
-            <Button
-            variant="contained"
-            fullWidth
-            size="large"
-            type="submit"
+              variant="outlined"
+              fullWidth
+              size="large"
+              startIcon={<CircularProgress size={20} thickness={4} color="primary" />}
             >
               Login
             </Button>
-          }
+          ) : (
+            <Button variant="contained" fullWidth size="large" type="submit">
+              Login
+            </Button>
+          )}
         </form>
       </Paper>
     </Box>

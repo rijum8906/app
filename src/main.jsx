@@ -1,4 +1,4 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import { Fragment } from 'react';
 import App from './App.jsx';
@@ -14,6 +14,6 @@ createRoot(document.getElementById('root')).render(
           <App />
         </BrowserRouter>
       </PersistGate>
-   </Provider>
+    </Provider>
   </Fragment>
 );

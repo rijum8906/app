@@ -9,8 +9,8 @@ const Loader = ({ text = 'Loading...', fullPage = false }) => {
       alignItems="center"
       gap={2}
       sx={{
-        height: "100vh",
-        width: "100vw"
+        height: '100vh',
+        width: '100vw'
       }}
     >
       <CircularProgress size={50} thickness={5} color="primary" />

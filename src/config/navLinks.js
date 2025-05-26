@@ -7,61 +7,61 @@ import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 
 export const navLinks = [
   {
-    label: "Home",
-    path: "/",
+    label: 'Home',
+    path: '/',
     icon: HomeRoundedIcon
   },
   {
-    label: "Login",
-    path: "/login",
+    label: 'Login',
+    path: '/login',
     icon: LoginRoundedIcon
   },
   {
-    label: "Register",
-    path: "/register",
+    label: 'Register',
+    path: '/register',
     icon: AppRegistrationRoundedIcon
   },
   {
-    label: "About",
-    path: "/about",
+    label: 'About',
+    path: '/about',
     icon: InfoRoundedIcon
   },
   {
-    label: "Contact",
-    path: "/contact",
+    label: 'Contact',
+    path: '/contact',
     icon: ContactPageRoundedIcon
   },
   {
-    label: "Settings",
-    path: "/settings",
+    label: 'Settings',
+    path: '/settings',
     icon: SettingsRoundedIcon
   }
-  ]
-  
+];
+
 export const registeredNavLinks = [
   {
-    label: "Home",
-    path: "/",
+    label: 'Home',
+    path: '/',
     icon: HomeRoundedIcon
   },
   {
-    label: "Dashboard",
-    path: "/dashboard",
+    label: 'Dashboard',
+    path: '/dashboard',
     icon: LoginRoundedIcon
   },
   {
-    label: "About",
-    path: "/about",
+    label: 'About',
+    path: '/about',
     icon: InfoRoundedIcon
   },
   {
-    label: "Contact",
-    path: "/contact",
+    label: 'Contact',
+    path: '/contact',
     icon: ContactPageRoundedIcon
   },
   {
-    label: "Settings",
-    path: "/settings",
+    label: 'Settings',
+    path: '/settings',
     icon: SettingsRoundedIcon
   }
-  ]
+];
