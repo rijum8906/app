@@ -1,14 +1,16 @@
 import { createContext, useMemo, useState, useContext } from 'react';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { generateTheme } from './../utils/themeGenrator';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleMode } from "./../features/theme/themeSlice";
 
 const ThemeModeContext = createContext();
 
-export const useThemeMode = () => useContext(ThemeModeContext);
+export const useTheme = () => useContext(ThemeModeContext);
 
 const ThemeModeProvider = ({ children, colors }) => {
   const { mode } = useSelector(state => state.theme);
+  const dispatch = useDispatch();
 
   const theme = useMemo(
     () =>
@@ -22,7 +24,7 @@ const ThemeModeProvider = ({ children, colors }) => {
   );
 
   return (
-    <ThemeModeContext.Provider value={{ mode }}>
+    <ThemeModeContext.Provider value={{ toggleTheme: () => dispatch(toggleMode()), mode }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {children}

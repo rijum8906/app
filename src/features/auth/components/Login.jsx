@@ -1,11 +1,13 @@
 import { Box, TextField, Button, Typography, Paper, InputAdornment, CircularProgress } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { startLoading, loginSuccess, loginFailure } from './../authSlice';
+import { useAuth } from "./../../../providers/AuthProvider"
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
+import { GoogleAuthButton } from "./../../../components/AuthButtons";
 
 // Zod schema
 const schema = z.object({
@@ -14,7 +16,7 @@ const schema = z.object({
 });
 
 const LoginPage = () => {
-  const { loading } = useSelector(state => state.auth);
+  const { loading, login, googleAuth, promptGoogleAuth } = useAuth();
   const dispatch = useDispatch();
 
   const {
@@ -30,6 +32,10 @@ const LoginPage = () => {
     console.log('Login submitted:', data);
     // Handle actual login logic
   };
+  
+  const handleGoogleAuth = data => {
+    promptGoogleAuth();
+  }
 
   return (
     <Box
@@ -92,6 +98,14 @@ const LoginPage = () => {
             </Button>
           )}
         </form>
+        <Box sx={{
+          mt: 3,
+          '& *': {
+            borderRadius: 1
+          }
+        }}>
+          <GoogleAuthButton onClick={handleGoogleAuth}/>
+        </Box>
       </Paper>
     </Box>
   );

@@ -7,6 +7,7 @@ dotenv.config();
 export default defineConfig({
   plugins: [react()],
   define: {
+    'API_URL': JSON.stringify(process.env.API_URL),
     'WEBSITE_URL': JSON.stringify(process.env.WEBSITE_URL),
     'GOOGLE_CLIENT_ID': JSON.stringify(process.env.GOOGLE_CLIENT_ID),
     'WEBSITE_NAME': JSON.stringify(process.env.WEBSITE_NAME),

@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { NavLinksForSM } from "./NavLinks"
 
 // --- Icons ---
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
@@ -19,13 +20,17 @@ import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import Brightness4RoundedIcon from '@mui/icons-material/Brightness4Rounded';
 import Brightness7RoundedIcon from '@mui/icons-material/Brightness7Rounded';
 
+// --- Custom Hooks ---
+import { useAuth } from "./../providers/AuthProvider";
+import { useTheme } from "./../providers/ThemeProvider";
+
 // --- Redux ---
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleMode } from './../features/theme/themeSlice';
 
 const Navbar = () => {
-  const { token } = useSelector(state => state.auth);
-  const { mode } = useSelector(state => state.theme);
+  const { token } = useAuth();
+  const { mode, toggleTheme } = useTheme();
 
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -37,7 +42,7 @@ const Navbar = () => {
   };
 
   const toggleThemeMode = () => {
-    dispatch(toggleMode());
+    toggleTheme();
   };
 
   return (
