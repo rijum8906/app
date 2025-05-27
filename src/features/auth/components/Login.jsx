@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import { GoogleAuthButton } from "./../../../components/AuthButtons";
+import { showAlert } from "./../../../components/customs/GlobalAlert";
 
 // Zod schema
 const schema = z.object({
@@ -34,6 +35,7 @@ const LoginPage = () => {
   };
   
   const handleGoogleAuth = data => {
+    showAlert("Hey there", "error")
     promptGoogleAuth();
   }
 

@@ -8,7 +8,8 @@ import {
   ListItemButton,
   ListItemText,
   ListItemIcon,
-  Box
+  Box,
+  Avatar
 } from '@mui/material';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -29,7 +30,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toggleMode } from './../features/theme/themeSlice';
 
 const Navbar = () => {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   const { mode, toggleTheme } = useTheme();
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -73,9 +74,7 @@ const Navbar = () => {
           </IconButton>
 
           {token ? (
-            <Button startIcon={<LoginRoundedIcon />} color="onPrimary" size="large" variant="outlined">
-              Avatar
-            </Button>
+            <Avatar src={user.profile.avatarURL} alt={user.username} />
           ) : (
             <Button color="primary" startIcon={<LoginRoundedIcon />} variant="outlined">
               Login
